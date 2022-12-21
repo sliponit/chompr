@@ -7,10 +7,7 @@ const corsHeaders = {
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
 })
-/**
- * Respond with hello worker text
- * @param {Request} request
- */
+
 async function handleRequest(request) {
   if (request.method === 'OPTIONS') {
     return new Response('OK', { headers: corsHeaders })
@@ -18,7 +15,12 @@ async function handleRequest(request) {
     const { searchParams } = new URL(request.url)
     const name = searchParams.get('name')
     const endpointURL = `https://api.twitter.com/2/users/by/username/${name}?user.fields=public_metrics`
-    const response =  await fetch(endpointURL) // TODO?? bearer content-type
+    const response =  await fetch(endpointURL,{
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TWITTER_TOKEN_BEARER}`
+      }
+    })
     const json = await response.json()
     const res = JSON.stringify(json)
     return new Response(res, {
