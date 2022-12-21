@@ -1,4 +1,4 @@
-name = "worker"
+name = "chompr-worker"
 type = "javascript"
 
 account_id = ""

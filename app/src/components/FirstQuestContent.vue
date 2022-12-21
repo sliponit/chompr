@@ -30,9 +30,8 @@ export default {
       apiMessage,
       async callApi() {
         try {
-          const endpointURL = `https://api.twitter.com/2/users/by/username/${props.name}?user.fields=public_metrics`
+          const endpointURL = `${import.meta.env.VITE_API_URL}?name=${props.name}`
           const response = await fetch(endpointURL);
-          
           const data = await response.json();
           apiMessage.value = data;
         } catch (e) {
