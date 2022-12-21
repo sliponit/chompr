@@ -2,14 +2,11 @@
   <div>
     <hero />
     <hr />
-    <Suspense>
-      <home-content v-show="user" />
-    </Suspense>
+    <home-content/>
   </div>
 </template>
 
 <script>
-import { useAuth0 } from '@auth0/auth0-vue';
 import Hero from "../components/Hero.vue";
 import HomeContent from "../components/HomeContent.vue";
 
@@ -18,10 +15,6 @@ export default {
   components: {
     Hero,
     HomeContent,
-  },
-  setup() {
-    const { user } = useAuth0()
-    return { user }
   }
 };
 </script>
