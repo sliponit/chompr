@@ -1,5 +1,9 @@
 <template>
-  <first-quest-content :name="user?.name" />
+  <div>
+    <Suspense>
+      <first-quest-content :name="user?.name" />
+    </Suspense>
+  </div>
 </template>
 
 <script>

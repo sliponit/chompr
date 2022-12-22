@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="mb-5">
-      <h1>First Quest</h1>
-      <p>{{ `You have ${apiMessage?.public_metrics?.tweet_count} tweets` }}</p>
+    <h1>First Quest</h1>
+    <div v-if="!doneClick">
+      <p>{{ `You have ${profile?.public_metrics?.tweet_count} tweets` }}</p>
       <p>Go clean some, see eg <a href="https://www.jeffbullas.com/twitter-tools-to-delete-tweets/" target="_blank">this blog post</a> for a list of automated tools</p>
-      <p>Click done</p>
-      <button class="btn btn-primary mt-5" @click="callApi">Done</button>
+      <button class="btn btn-primary mt-5" @click="fetchApiAndUpdateRef">Done</button>
     </div>
 
     <div class="result-block-container">
-      <div :class="['result-block', apiMessage ? 'show' : '']">
-        <h6 class="muted">Result</h6>
-        <highlightjs language="json" :code="JSON.stringify(apiMessage, null, 2) || ''" />
+      <div :class="['result-block', doneClick ? 'show' : '']">
+        <h6 class="muted">{{ `Congrats! You now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
+        <highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" />
       </div>
     </div>
   </div>
@@ -20,23 +19,31 @@
 <script>
 import { ref } from 'vue'
 
+function fetchApi (name) {
+  const endpointURL = `${import.meta.env.VITE_API_URL}?name=${name}`
+  return fetch(endpointURL)
+    .then(response => response.json())
+    .then(json => json?.data);
+}
+
 export default {
   name: "first-quest-view",
   props: {
     name: String,
   },
-  setup(props) {
-    const apiMessage = ref();
+  async setup(props) {
+    const doneClick = ref(false)
+    const profile = ref();
+    profile.value = await fetchApi(props.name)
     return {
-      apiMessage,
-      async callApi() {
+      doneClick,
+      profile,
+      async fetchApiAndUpdateRef() {
         try {
-          const endpointURL = `${import.meta.env.VITE_API_URL}?name=${props.name}`
-          const response = await fetch(endpointURL);
-          const data = await response.json();
-          apiMessage.value = data?.data;
+          profile.value = await fetchApi(props.name);
+          doneClick.value = true
         } catch (e) {
-          apiMessage.value = `Error: the server responded with '${e.response.status}: ${e.response.statusText}'`;
+          profile.value = 'error' // TODO?? `Error: the server responded with '${e.response.status}: ${e.response.statusText}'`;
         }
       },
     };
