@@ -2,8 +2,10 @@
   <div>
     <div class="mb-5">
       <h1>First Quest</h1>
-
-      <button class="btn btn-primary mt-5" @click="callApi">Call API</button>
+      <p>{{ `You have ${apiMessage?.public_metrics?.tweet_count} tweets` }}</p>
+      <p>Go clean some, see eg <a href="https://www.jeffbullas.com/twitter-tools-to-delete-tweets/" target="_blank">this blog post</a> for a list of automated tools</p>
+      <p>Click done</p>
+      <button class="btn btn-primary mt-5" @click="callApi">Done</button>
     </div>
 
     <div class="result-block-container">
@@ -25,7 +27,6 @@ export default {
   },
   setup(props) {
     const apiMessage = ref();
-    console.log('TODO??', props.name)
     return {
       apiMessage,
       async callApi() {
@@ -33,7 +34,7 @@ export default {
           const endpointURL = `${import.meta.env.VITE_API_URL}?name=${props.name}`
           const response = await fetch(endpointURL);
           const data = await response.json();
-          apiMessage.value = data;
+          apiMessage.value = data?.data;
         } catch (e) {
           apiMessage.value = `Error: the server responded with '${e.response.status}: ${e.response.statusText}'`;
         }
