@@ -1,7 +1,7 @@
 const corsHeaders = {
   'Access-Control-Allow-Headers': '*',
   'Access-Control-Allow-Methods': 'GET',
-  'Access-Control-Allow-Origin': '*' // TODO??
+  'Access-Control-Allow-Origin': 'https://chompr.pages.dev'
 }
 
 addEventListener('fetch', event => {

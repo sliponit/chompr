@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mb-5">
-      <h1>External API</h1>
+      <h1>First Quest</h1>
 
       <button class="btn btn-primary mt-5" @click="callApi">Call API</button>
     </div>
