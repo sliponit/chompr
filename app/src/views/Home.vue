@@ -2,7 +2,7 @@
   <div>
     <hero />
     <hr />
-    <home-content />
+    <home-content/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
   components: {
     Hero,
     HomeContent,
-  },
+  }
 };
 </script>
 
