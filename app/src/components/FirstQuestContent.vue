@@ -34,10 +34,19 @@ function fetchApi (name) {
 
 export default {
   name: "first-quest-view",
-  setup() {
-    const clicked = ref({ first: false, second: false })
-    const handle = ref('')
+  props: {
+    sub: String,
+    name: String
+  },
+  async setup(props) {
+    const isTwitterLogin = props.sub.startsWith('twitter|')
+    const clicked = ref({ first: isTwitterLogin, second: false })
+    const handle = ref(isTwitterLogin ? props.name : '')
     const profile = ref()
+    if (isTwitterLogin) {
+      profile.value = await fetchApi(props.name)
+    }
+
     return {
       clicked,
       handle,
