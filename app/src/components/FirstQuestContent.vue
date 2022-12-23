@@ -25,8 +25,8 @@
 <script>
 import { ref } from 'vue'
 
-function fetchApi (name) {
-  const endpointURL = `${import.meta.env.VITE_API_URL}?name=${name}`
+function fetchApi (name, username = '', count = 0) {
+  const endpointURL = `${import.meta.env.VITE_API_URL}?name=${name}&username=${username}&count=${count}`
   return fetch(endpointURL)
     .then(response => response.json())
     .then(json => json?.data);
@@ -52,7 +52,7 @@ export default {
       handle,
       profile,
       async fetchAndClicked(isFirst = true) {
-        profile.value = await fetchApi(handle.value);
+        profile.value = await fetchApi(handle.value, props.name, profile.value?.public_metrics?.tweet_count || 0);
         if (isFirst) clicked.value.first = true
         else clicked.value.second = true
       }
