@@ -1,7 +1,7 @@
 <template>
   <div>
     <Suspense>
-      <first-quest-content :name="user?.name" />
+      <first-quest-content :sub="user?.sub" :name="user?.name" />
     </Suspense>
   </div>
 </template>
