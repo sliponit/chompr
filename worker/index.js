@@ -1,7 +1,7 @@
 const corsHeaders = {
-  'Access-Control-Allow-Headers': 'https://chompr.pages.dev',
+  'Access-Control-Allow-Headers': '*',
   'Access-Control-Allow-Methods': 'GET,POST',
-  'Access-Control-Allow-Origin': '*'
+  'Access-Control-Allow-Origin': 'https://chompr.pages.dev'
 }
 
 async function fetchTwitterProfile(name){
@@ -46,7 +46,16 @@ async function handleRequest(request) {
       return new Response('BadRequest', { status: 400 })
     }
 
-    console.log('TODO?? ' + JSON.stringify({ user_name, count, eth_address, newCount }))
+    const user = await CHOMPERS.get(user_name, { type: 'json' })
+    const quest = {
+      number: 1,
+      old_count: count,
+      profile,
+      eth_address,
+      date: new Date().toISOString()
+    }
+    const quests = (user?.quests || []).concat(quest)
+    await CHOMPERS.put(user_name, JSON.stringify({ twitter_name, eth_address, quests }))
     return new Response(JSON.stringify(profile), {
       headers: {
         'Content-type': 'application/json',

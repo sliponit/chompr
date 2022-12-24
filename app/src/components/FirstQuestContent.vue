@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>First Quest: clean some old tweets</h1>
-    <div v-if="!clicked.first" class="row align-items-center">
+    <div v-if="profile?.public_metrics?.tweet_count == undefined" class="row align-items-center">
       <div class="col-md-12">Enter your twitter name to continue</div>
       <div class="col-md-4">
         <input
@@ -9,7 +9,7 @@
           placeholder="twitter name" />
       </div>
       <div class="col-md">
-        <button class="btn btn-primary" @click="fetchAndClicked">Validate</button>
+        <button class="btn btn-primary" @click="fetchAndUpdateRef">Validate</button>
       </div>
     </div>
     <div v-else-if="!clicked.second">
@@ -64,7 +64,7 @@ export default {
   },
   async setup(props) {
     const isTwitterLogin = props.sub.startsWith('twitter|')
-    const clicked = ref({ first: isTwitterLogin, second: false })
+    const clicked = ref({ second: false })
     const ethAddress = ref('')
     const handle = ref(isTwitterLogin ? props.name : '')
     const profile = ref()
@@ -77,9 +77,8 @@ export default {
       ethAddress,
       handle,
       profile,
-      async fetchAndClicked() {
+      async fetchAndUpdateRef() {
         profile.value = await fetchApi(handle.value, props.name);
-        clicked.value.first = true
       },
       async postAndClicked() {
         const body = {
