@@ -33,16 +33,20 @@ async function handleRequest(request) {
         ...corsHeaders
       }
     })
-  } else if (request.method === 'POST') {
+  } else if (request.method === 'POST') { // TODO?? check headers
     // curl -X POST <worker> -H "Content-Type: application/json" -d '{"events": "def"}'
     const { twitter_name, user_name, count, eth_address } = await request.json() || {}
     if (!twitter_name || !user_name || !count ) {
       return new Response('Forbidden', { status: 403 })
     }
 
-
     const profile = await fetchTwitterProfile(twitter_name)
-    console.log('TODO?? ' + JSON.stringify({ twitter_name, user_name, count, eth_address }))
+    const newCount = profile?.data?.public_metrics?.tweet_count || 0
+    if (newCount >= count) {
+      return new Response('BadRequest', { status: 400 })
+    }
+
+    console.log('TODO?? ' + JSON.stringify({ user_name, count, eth_address, newCount }))
     return new Response(JSON.stringify(profile), {
       headers: {
         'Content-type': 'application/json',
@@ -50,6 +54,6 @@ async function handleRequest(request) {
       }
     })
   } else {
-    return new Response('Invalid method', { status: 500 });
+    return new Response('InvalidMethod', { status: 500 });
   }
 }

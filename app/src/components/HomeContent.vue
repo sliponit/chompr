@@ -2,6 +2,11 @@
   <div class="text-center">
     <h2 class="my-5">What can I do next?</h2>
     <p class="lead">{{ isAuthenticated ? 'Do ' : 'Login and do ' }} first quest. You will be learn how to clean some of your old tweets. </p>
+    <div v-if="isAuthenticated">
+      <router-link to="/first-quest">
+        <button id="myButton" class="btn btn-primary">LFG!</button>
+      </router-link>
+    </div>
   </div>
 </template>
 
