@@ -2,7 +2,9 @@
   <div class="nav-container mb-3">
     <nav class="navbar navbar-expand-md navbar-light bg-light">
       <div class="container">
-        <div class="navbar-brand logo"></div>
+        <div class="navbar-brand app-logo" >
+          <img src="/chompr_pfp.png" alt="CHOMPR pfp" width="80"/>
+        </div>
         <button
           class="navbar-toggler"
           type="button"

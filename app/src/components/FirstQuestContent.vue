@@ -15,18 +15,21 @@
     <div v-else-if="!clicked.second">
       <p>{{ `You have ${profile?.public_metrics?.tweet_count} tweets for your ${handle} account` }}</p>
       <p>Go clean some. Do it by hand or in bulk, see eg <a href="https://www.jeffbullas.com/twitter-tools-to-delete-tweets/" target="_blank">this blog post</a> for a list of automated tools</p>
-      <p>(Optional) If you know about NFTs and want to receive a free one, enter your ETH public address below. We will be in touch!
+      <!--p>(Optional) If you know about NFTs and want to receive a free one, enter your ETH public address below. We will be in touch!
         <br>
         <input
           v-model="ethAddress"
           placeholder="eth address" />
-      </p>
+      </p-->
       <button class="btn btn-primary mt-5" @click="postAndClicked">Done</button>
     </div>
 
-    <div class="result-block-container">
+    <div class="result-block-container mt-5">
       <div :class="['result-block', clicked.second ? 'show' : '']">
-        <h6 class="muted">{{ `Congrats! You now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
+        <h6 class="muted">{{ `Congrats! You have cleaned ${diff} tweets and you now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
+        <p>
+          If you know about NFTs, you can mint a free one and claim your membership on-chain at <a href="https://www.flocker.app/137/locks/0x3699e8ea1aca58744df6b035d88c3518261f98c7" target="_blank">this address</a>.
+        </p>
         <!--highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" /-->
       </div>
     </div>
@@ -65,7 +68,7 @@ export default {
   async setup(props) {
     const isTwitterLogin = props.sub.startsWith('twitter|')
     const clicked = ref({ second: false })
-    const ethAddress = ref('')
+    const diff = ref(0)
     const handle = ref(isTwitterLogin ? props.name : '')
     const profile = ref()
     if (isTwitterLogin) {
@@ -74,20 +77,23 @@ export default {
 
     return {
       clicked,
-      ethAddress,
+      diff,
       handle,
       profile,
       async fetchAndUpdateRef() {
         profile.value = await fetchApi(handle.value, props.name);
       },
       async postAndClicked() {
+        const count = profile.value?.public_metrics?.tweet_count || 0
         const body = {
           twitter_name: handle.value,
           user_name: props.name,
-          count: profile.value?.public_metrics?.tweet_count || 0,
-          eth_address: ethAddress.value
+          count,
+          // eth_address: ethAddress.value
         }
+        
         profile.value = await postApi(body);
+        diff.value = count - profile.value?.public_metrics?.tweet_count
         clicked.value.second = true
       }
     };
