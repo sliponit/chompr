@@ -89,7 +89,7 @@ export default {
           twitter_name: handle.value,
           user_name: props.name,
           count,
-          eth_address: "" // ethAddress.value
+          // eth_address: ethAddress.value
         }
         
         profile.value = await postApi(body);

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center mb-5">
-    <h2 class="my-5">What can I do next?</h2>
+    <h2>What can I do next?</h2>
     <p class="lead">{{ isAuthenticated ? 'Do ' : 'Login and do ' }} first quest. You will learn how to clean some of your old tweets. </p>
     <div v-if="isAuthenticated">
       <router-link to="/first-quest">

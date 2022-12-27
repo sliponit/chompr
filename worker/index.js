@@ -35,7 +35,7 @@ async function handleRequest(request) {
     })
   } else if (request.method === 'POST') { // TODO?? check headers
     // curl -X POST <worker> -H "Content-Type: application/json" -d '{"events": "def"}'
-    const { twitter_name, user_name, count, eth_address } = await request.json() || {}
+    const { twitter_name, user_name, count } = await request.json() || {}
     if (!twitter_name || !user_name || !count ) {
       return new Response('Forbidden', { status: 403 })
     }
@@ -50,12 +50,11 @@ async function handleRequest(request) {
     const quest = {
       number: 1,
       old_count: count,
-      profile,
-      eth_address,
+      profile: profile.data,
       date: new Date().toISOString()
     }
     const quests = (user?.quests || []).concat(quest)
-    await CHOMPERS.put(user_name, JSON.stringify({ twitter_name, eth_address, quests }))
+    await CHOMPERS.put(user_name, JSON.stringify({ twitter_name, quests }))
     return new Response(JSON.stringify(profile), {
       headers: {
         'Content-type': 'application/json',
