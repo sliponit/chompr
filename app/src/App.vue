@@ -8,17 +8,26 @@
       </div>
     </div>
     <footer class="bg-light text-center p-3">
-      <!--div class="logo"></div-->
-      <p>
-        Social 
-        <a class="mr-3" href="https://twitter.com/chompr_" target="_blank">
-          <img class="app-logo" src="/twitter-logo.svg" alt="twitter logo" width="30" />
-        </a>
-        Source code
-        <a href="https://github.com/sliponit/chompr" target="_blank">
-          <img class="app-logo" src="/github-mark.svg" alt="github logo" width="30" />
-        </a>
-      </p>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col">
+            <p>
+              Social 
+              <a class="mr-3" href="https://twitter.com/chompr_" target="_blank">
+                <img class="app-logo" src="/twitter-logo.svg" alt="twitter logo" width="30" />
+              </a>
+            </p>
+          </div>
+          <div class="col">
+            <p>
+              Source code
+              <a href="https://github.com/sliponit/chompr" target="_blank">
+                <img class="app-logo" src="/github-mark.svg" alt="github logo" width="30" />
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
     </footer>
   </div>
 </template>
@@ -33,10 +42,11 @@ export default {
     Error
   }
 };
+
 </script>
 
-<!--style>
-footer {
-  min-height: 30px;
+<style>
+.btn-pink {
+  background-color: #ff80c9;
 }
-</style-->
+</style>

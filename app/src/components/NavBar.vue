@@ -30,7 +30,7 @@
             <li v-if="!isAuthenticated && !isLoading" class="nav-item">
               <button
                 id="qsLoginBtn"
-                class="btn btn-primary btn-margin"
+                class="btn btn-margin btn-pink"
                 @click.prevent="login"
               >Login</button>
             </li>
@@ -62,7 +62,7 @@
           </ul>
 
           <ul class="navbar-nav d-md-none" v-if="!isAuthenticated && !isLoading">
-            <button id="qsLoginBtn" class="btn btn-primary btn-block" @click="login">Log in</button>
+            <button id="qsLoginBtn" class="btn btn-pink btn-block" @click="login">Log in</button>
           </ul>
 
           <ul
@@ -126,5 +126,15 @@ export default {
 #mobileAuthNavBar {
   min-height: 125px;
   justify-content: space-between;
+}
+
+.navbar .router-link-exact-active {
+  border-bottom: 3px solid #ff80c9;
+}
+
+@media (max-width: 767px) {
+  .nav-item .nav-link.router-link-exact-active {
+    border-left: 3px solid #ff80c9;
+  }
 }
 </style>

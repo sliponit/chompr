@@ -4,7 +4,7 @@
     <p class="lead">{{ isAuthenticated ? 'Do ' : 'Login and do ' }} first quest. You will learn how to clean some of your old tweets. </p>
     <div v-if="isAuthenticated">
       <router-link to="/first-quest">
-        <button id="myButton" class="btn btn-primary">LFG!</button>
+        <button id="myButton" class="btn btn-pink">LFG!</button>
       </router-link>
     </div>
   </div>

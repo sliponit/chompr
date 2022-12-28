@@ -9,7 +9,7 @@
           placeholder="twitter name" />
       </div>
       <div class="col-md">
-        <button class="btn btn-primary" @click="fetchAndUpdateRef">Validate</button>
+        <button class="btn btn-pink" @click="fetchAndUpdateRef">Validate</button>
       </div>
     </div>
     <div v-else-if="!clicked.second">
@@ -21,7 +21,7 @@
           v-model="ethAddress"
           placeholder="eth address" />
       </p-->
-      <button class="btn btn-primary mt-5" @click="postAndClicked">Done</button>
+      <button class="btn btn-pink mt-5" @click="postAndClicked">Done</button>
     </div>
 
     <div class="result-block-container mt-5">
