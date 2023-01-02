@@ -1,14 +1,14 @@
 <template>
-  <div>
-    <h1>First Quest: clean some old tweets</h1>
-    <div v-if="profile?.public_metrics?.tweet_count == undefined" class="row align-items-center">
-      <div class="col-md-12">Enter your twitter name to continue</div>
-      <div class="col-md-4">
+  <div class="text-center my-5">
+    <h2 class="mb-3">What can I do next? First Quest - clean some old tweets!</h2>
+    <div v-if="profile?.public_metrics?.tweet_count == undefined">
+      <p>Enter your twitter name to continue</p>
+      <div class="mb-3">
         <input
           v-model="handle"
           placeholder="twitter name" />
       </div>
-      <div class="col-md">
+      <div>
         <button class="btn btn-pink" @click="fetchAndUpdateRef">Validate</button>
       </div>
     </div>
@@ -24,14 +24,12 @@
       <button class="btn btn-pink mt-5" @click="postAndClicked">Done</button>
     </div>
 
-    <div class="result-block-container mt-5">
-      <div :class="['result-block', clicked.second ? 'show' : '']">
-        <h6 class="muted">{{ `Congrats! You have cleaned ${diff} tweets and you now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
-        <p>
-          If you know about NFTs, you can mint a free one and claim your membership on-chain at <a href="https://www.flocker.app/137/locks/0x3699e8ea1aca58744df6b035d88c3518261f98c7" target="_blank">this address</a>.
-        </p>
-        <!--highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" /-->
-      </div>
+    <div v-if="clicked.second" class="mt-5">
+      <h6 class="muted">{{ `Congrats! You have cleaned ${diff} tweets and you now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
+      <p>
+        If you know about NFTs, you can mint a free one and claim your membership on-chain at <a href="https://www.flocker.app/137/locks/0x3699e8ea1aca58744df6b035d88c3518261f98c7" target="_blank">this address</a>.
+      </p>
+      <!--highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" /-->
     </div>
   </div>
 </template>
@@ -66,7 +64,7 @@ export default {
     name: String
   },
   async setup(props) {
-    const isTwitterLogin = props.sub.startsWith('twitter|')
+    const isTwitterLogin = props.sub?.startsWith('twitter|')
     const clicked = ref({ second: false })
     const diff = ref(0)
     const handle = ref(isTwitterLogin ? props.name : '')
@@ -81,13 +79,13 @@ export default {
       handle,
       profile,
       async fetchAndUpdateRef() {
-        profile.value = await fetchApi(handle.value, props.name);
+        profile.value = await fetchApi(handle.value);
       },
       async postAndClicked() {
         const count = profile.value?.public_metrics?.tweet_count || 0
         const body = {
           twitter_name: handle.value,
-          user_name: props.name,
+          // user_name: props.name,
           count,
           // eth_address: ethAddress.value
         }
