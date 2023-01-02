@@ -1,8 +1,15 @@
 name = "chompr-worker"
-type = "javascript"
 
-account_id = ""
+account_id = "421c928d12bc33cac24b2e6b324bb001"
 workers_dev = true
-route = ""
-zone_id = ""
 compatibility_date = "2022-12-21"
+
+kv_namespaces = [
+  { binding = "CHOMPERS", preview_id = "871eeacc4cb440a6a1e49a8f6776c549", id = "aca0134fb7304852a957d921d57b40e7" }
+]
+
+
+[vars]
+TWITTER_TOKEN_BEARER = "AAAAAAAAAAAAAAAAAAAAAOrIkgEAAAAA0EejOlZQ41dJM2tcan%2BZUxF4bPo%3DgGqIhq68YomakwcCvQRVvYDVfntGF7P9r75oTLDXQVHrC0ozqG"
+[env.production.vars]
+TWITTER_TOKEN_BEARER = "AAAAAAAAAAAAAAAAAAAAAKBwkgEAAAAAyikhaH5NrEkTVTBstNjgrI7sJrY%3DmT4uKJ2WAJxQ2qsrfpR4heShRtooyhbfsxXCl9EUA6hUuFj3zu"
