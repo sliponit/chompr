@@ -2,19 +2,21 @@
   <div>
     <hero />
     <hr />
-    <home-content/>
+    <Suspense>
+      <first-quest-content />
+    </Suspense>
   </div>
 </template>
 
 <script>
 import Hero from "../components/Hero.vue";
-import HomeContent from "../components/HomeContent.vue";
+import FirstQuestContent from "../components/FirstQuestContent.vue";
 
 export default {
   name: "home-view",
   components: {
     Hero,
-    HomeContent,
+    FirstQuestContent,
   }
 };
 </script>
