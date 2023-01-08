@@ -2,19 +2,20 @@
   <div class="text-center my-5">
     <h2 class="mb-3">What can I do next? First Quest - clean some old tweets!</h2>
     <div v-if="profile?.public_metrics?.tweet_count == undefined">
-      <p>Enter your twitter name to continue</p>
+      <p>Enter your Twitter name to continue</p>
       <div class="mb-3">
         <input
           v-model="handle"
-          placeholder="twitter name" />
+          placeholder="Twitter name"
+          v-on:keyup.enter="fetchAndUpdateRef" />
       </div>
       <div>
         <button class="btn btn-pink" @click="fetchAndUpdateRef">Validate</button>
       </div>
     </div>
     <div v-else-if="!clicked.second">
-      <p>{{ `You have ${profile?.public_metrics?.tweet_count} tweets for your ${handle} account` }}</p>
-      <p>Go clean some. Do it by hand or in bulk, see eg <a href="https://www.jeffbullas.com/twitter-tools-to-delete-tweets/" target="_blank">this blog post</a> for a list of automated tools</p>
+      <p v-html="`You have <strong>${profile?.public_metrics?.tweet_count}</strong> tweets for your <strong>${handle}</strong> account`" />
+      <p>Go clean some! We tested and liked the free plan of <a href="https://www.tweeteraser.com/" target="_blank">TweeterEraser</a>. Othewise other automated tools do exist or you can delete tweets / RT it by hand. Do not forget to hit 'Done' after!</p>.
       <!--p>(Optional) If you know about NFTs and want to receive a free one, enter your ETH public address below. We will be in touch!
         <br>
         <input
@@ -25,11 +26,16 @@
     </div>
 
     <div v-if="clicked.second" class="mt-5">
-      <h6 class="muted">{{ `Congrats! You have cleaned ${diff} tweets and you now have ${profile?.public_metrics?.tweet_count} tweets` }}</h6>
-      <p>
-        If you know about NFTs, you can mint a free one and claim your membership on-chain at <a href="https://www.flocker.app/137/locks/0x3699e8ea1aca58744df6b035d88c3518261f98c7" target="_blank">this address</a>.
-      </p>
-      <!--highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" /-->
+      <h6 class="muted" v-html="`Congrats! You have cleaned <strong>${diff}</strong> tweets and now have <strong>${profile?.public_metrics?.tweet_count}</strong> tweets left!`"/>
+      <div class="text-left">
+        <p>Now you are probably wondering about three things:</p>
+        <ol>
+          <li>Where are other quests?</li>
+          <li>What is my reward?</li>
+          <li>What was the environmental impact of my cleaning?</li>
+        </ol>
+        <p>We are figuring out these questions! If you have suggestions / feedback, please mention us or drop us a DM on Twitter 🙂</p>
+      </div>
     </div>
   </div>
 </template>

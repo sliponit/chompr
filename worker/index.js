@@ -1,7 +1,7 @@
 const corsHeaders = {
   'Access-Control-Allow-Headers': '*',
   'Access-Control-Allow-Methods': 'GET,POST',
-  'Access-Control-Allow-Origin': '*'
+  'Access-Control-Allow-Origin': 'https://chompr.pages.dev'
 }
 
 async function fetchTwitterProfile(name){
