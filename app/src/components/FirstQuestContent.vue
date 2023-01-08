@@ -29,7 +29,6 @@
       <p>
         If you know about NFTs, you can mint a free one and claim your membership on-chain at <a href="https://www.flocker.app/137/locks/0x3699e8ea1aca58744df6b035d88c3518261f98c7" target="_blank">this address</a>.
       </p>
-      <!--highlightjs language="json" :code="JSON.stringify(profile, null, 2) || ''" /-->
     </div>
   </div>
 </template>
