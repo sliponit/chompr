@@ -1,7 +1,7 @@
 const corsHeaders = {
   'Access-Control-Allow-Headers': '*',
   'Access-Control-Allow-Methods': 'GET,POST',
-  'Access-Control-Allow-Origin': 'https://chompr.pages.dev'
+  'Access-Control-Allow-Origin': 'https://chompr.io'
 }
 
 async function fetchTwitterProfile(name){
@@ -40,13 +40,14 @@ async function handleRequest(request) {
       return new Response('Forbidden', { status: 403 })
     }
 
-    const profile = await fetchTwitterProfile(twitter_name)
+    const key = twitter_name.toLowerCase()
+    const profile = await fetchTwitterProfile(key)
     const newCount = profile?.data?.public_metrics?.tweet_count || 0
     if (newCount >= count) {
       return new Response('BadRequest', { status: 400 })
     }
 
-    const user = await CHOMPERS.get(twitter_name, { type: 'json' })
+    const user = await CHOMPERS.get(key, { type: 'json' })
     const quest = {
       number: 1,
       old_count: count,
@@ -54,7 +55,7 @@ async function handleRequest(request) {
       date: new Date().toISOString()
     }
     const quests = (user?.quests || []).concat(quest)
-    await CHOMPERS.put(twitter_name, JSON.stringify({ twitter_name, quests }))
+    await CHOMPERS.put(key, JSON.stringify({ twitter_name: key, quests }))
     return new Response(JSON.stringify(profile), {
       headers: {
         'Content-type': 'application/json',

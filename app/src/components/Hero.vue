@@ -6,7 +6,7 @@
       </div>
       <div class="col">
         <p class="lead">
-          Clear your digital footprint, earn rewards, and reduce your environmental impact
+          Decrease your digital footprint, earn rewards, and reduce your environmental impact
         </p>
       </div>
     </div>
