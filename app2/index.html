@@ -48,9 +48,18 @@
 
     
     <!--script type="module" data-framer-bundle="" src="./index_files/_script0.LPLJFIAC.mjs"></script-->
-    <script>document.querySelectorAll('.framer-113r8va')[0].addEventListener('click', function(event) {
-      var a = document.querySelector('input[name="handle"]');
-      console.log('clicked', a.value);
+    <script>document.querySelectorAll('.framer-113r8va')[0].addEventListener('click', async function(event) {
+      var name = document.querySelector('input[name="handle"]');
+      const url = 'https://chompr-worker.sliponit9471.workers.dev/?name=' + name.value
+      let response = await fetch(url);
+      if (response.ok) { // if HTTP-status is 200-299
+        let json = await response.json();
+        const count = json?.data?.public_metrics?.tweet_count || 0
+        const CO2eInG = count * 0.000026;
+        console.log('clicked', CO2eInG);
+      } else {
+        alert("HTTP-Error: " + response.status);
+      }
       event.preventDefault();
     });</script>
     
