@@ -1,6 +1,6 @@
 const corsHeaders = {
   'Access-Control-Allow-Headers': '*',
-  'Access-Control-Allow-Methods': 'GET,POST',
+  'Access-Control-Allow-Methods': 'GET',
   'Access-Control-Allow-Origin': 'https://chompr.io'
 }
 
@@ -28,35 +28,6 @@ async function handleRequest(request) {
     const profile = await fetchTwitterProfile(name)
     const res = JSON.stringify(profile)
     return new Response(res, {
-      headers: {
-        'Content-type': 'application/json',
-        ...corsHeaders
-      }
-    })
-  } else if (request.method === 'POST') { // TODO?? check headers
-    // curl -X POST <worker> -H "Content-Type: application/json" -d '{"events": "def"}'
-    const { twitter_name, count } = await request.json() || {}
-    if (!twitter_name || !count ) {
-      return new Response('Forbidden', { status: 403 })
-    }
-
-    const key = twitter_name.toLowerCase()
-    const profile = await fetchTwitterProfile(key)
-    const newCount = profile?.data?.public_metrics?.tweet_count || 0
-    if (newCount >= count) {
-      return new Response('BadRequest', { status: 400 })
-    }
-
-    const user = await CHOMPERS.get(key, { type: 'json' })
-    const quest = {
-      number: 1,
-      old_count: count,
-      profile: profile.data,
-      date: new Date().toISOString()
-    }
-    const quests = (user?.quests || []).concat(quest)
-    await CHOMPERS.put(key, JSON.stringify({ twitter_name: key, quests }))
-    return new Response(JSON.stringify(profile), {
       headers: {
         'Content-type': 'application/json',
         ...corsHeaders
