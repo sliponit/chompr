@@ -56,7 +56,7 @@
         let json = await response.json();
         const count = json?.data?.public_metrics?.tweet_count || 0
         const CO2eInKg = (count * 0.000026).toFixed(6);
-        const phoneCharges = (CO2eInKg * 0.003172).toFixed(6) // 0.000026 * 122
+        const phoneCharges = (CO2eInKg * 122).toFixed(6)
         var estimation =  document.querySelector('#estimation')
         estimation.innerHTML = `Oof.. that equals the CO2 emissions of ${CO2eInKg} kg of CO2e or ${phoneCharges} phone charges, why not delete some or all of your tweets?` 
         console.log('clicked ' + CO2eInKg);
